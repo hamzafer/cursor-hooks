@@ -1,8 +1,25 @@
 {
   "version": 1,
   "hooks": {
+    "beforeShellExecution": [
+      { "command": "./hooks/audit.sh" },
+      { "command": "./hooks/block-git.sh" }
+    ],
+    "beforeMCPExecution": [
+      { "command": "./hooks/audit.sh" }
+    ],
+    "beforeReadFile": [
+      { "command": "./hooks/redact-secrets.sh" }
+    ],
     "afterFileEdit": [
+      { "command": "./hooks/audit.sh" },
       { "command": "./hooks/format.sh" }
+    ],
+    "beforeSubmitPrompt": [
+      { "command": "./hooks/audit.sh" }
+    ],
+    "stop": [
+      { "command": "./hooks/audit.sh" }
     ]
   }
 }
