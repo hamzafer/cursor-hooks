@@ -4,7 +4,7 @@ This repo gives you copy‑paste ready recipes for Cursor's [Agent Hooks](https:
 
 ## Quickstart: Format Hook
 
-Create a minimal hook that runs after every file edit.
+Create a minimal hook that runs after every file edit. This repo already includes `hooks.json` and `hooks/format.sh` so you can copy them straight into `~/.cursor/`.
 
 1. Write `~/.cursor/hooks.json`:
 
