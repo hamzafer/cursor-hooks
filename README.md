@@ -1,21 +1,12 @@
 # Cursor Hooks Examples
 
-This repository provides ready-to-use examples and documentation for Cursor's [Agent Hooks](https://cursor.com/docs/agent/hooks). Hooks let you observe, control, or extend the agent loop by running custom scripts that communicate with Cursor over stdio using JSON.
+This repo gives you copy‑paste ready recipes for Cursor's [Agent Hooks](https://cursor.com/docs/agent/hooks). Hooks are lightweight scripts that exchange JSON with Cursor so you can observe, block, or mutate agent behavior.
 
-## What Are Hooks?
+## Quickstart: Format Hook
 
-Hooks run before or after key stages in Cursor's agent loop. By reacting to these stages you can:
+Create a minimal hook that runs after every file edit.
 
-- run formatters or linters after Cursor edits a file
-- audit every command before it executes
-- redact secrets before the agent reads a file
-- block risky operations or enforce policy gates
-
-Each hook definition points to an executable script. Cursor streams JSON input to the script on stdin, and expects a JSON response on stdout.
-
-## Quick Start
-
-1. Create a hooks configuration file at `~/.cursor/hooks.json`:
+1. Write `~/.cursor/hooks.json`:
 
    ```json
    {
@@ -28,7 +19,7 @@ Each hook definition points to an executable script. Cursor streams JSON input t
    }
    ```
 
-2. Create the hook script at `~/.cursor/hooks/format.sh`:
+2. Create `~/.cursor/hooks/format.sh`:
 
    ```bash
    #!/bin/bash
@@ -37,17 +28,27 @@ Each hook definition points to an executable script. Cursor streams JSON input t
    exit 0
    ```
 
-3. Make the script executable:
+3. Make it executable:
 
    ```bash
    chmod +x ~/.cursor/hooks/format.sh
    ```
 
-4. Restart Cursor to load the new hook.
+4. Restart Cursor and verify the hook runs after edits.
 
-## Included Hook Recipes
+## Why Hooks Matter
 
-The sections below document reusable hooks you can copy into `~/.cursor/hooks/`.
+With a handful of scripts you can:
+- run formatters or linters immediately after Cursor edits a file
+- audit or block shell commands before they execute
+- redact secrets before the agent reads sensitive content
+- apply safety guardrails around MCP tool usage
+
+Each hook definition maps to an executable script. Cursor streams JSON input on stdin and expects JSON back on stdout, letting you tailor the agent loop without patching Cursor itself.
+
+## Hook Catalog
+
+Below are reusable configurations and scripts you can drop into `~/.cursor/hooks/`.
 
 ### hooks.json
 
@@ -205,12 +206,12 @@ __ALLOW__
 fi
 ```
 
-## Repository Usage
+## How To Use This Repo
 
 1. Copy the configuration and scripts above into `~/.cursor/hooks.json` and `~/.cursor/hooks/`.
-2. Ensure every script is executable: `chmod +x ~/.cursor/hooks/*.sh`.
-3. Tail `/tmp/hooks.log` or `/tmp/agent-audit.log` to verify activity.
-4. Restart Cursor after updating hooks.
+2. Run `chmod +x ~/.cursor/hooks/*.sh` so Cursor can execute them.
+3. Tail `/tmp/hooks.log` or `/tmp/agent-audit.log` to verify hook activity.
+4. Restart Cursor after modifying any hook.
 
 ## Contributing
 
